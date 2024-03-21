@@ -13,3 +13,11 @@ function Book(title,author,pages,read){
 function addBookToLibrary(book) {
     myLibrary.push(book);
 };
+
+let bookList = document.querySelector(".book-list");
+
+myLibrary.forEach(book=>{
+    const currentElement = document.createElement("li");
+    currentElement.textContent = book;
+    bookList.appendChild(currentElement);
+});
