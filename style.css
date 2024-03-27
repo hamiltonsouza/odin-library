@@ -19,21 +19,23 @@
   box-shadow: 5px 5px 10px 0px #000000;
 }
 
-.close-button {
+#close-button {
+  background-color: transparent;
+  border: none;
   color: #FFFFFF;
   float: right;
   font-size: 2rem;
   font-weight: bold;
 }
 
-.close-button:hover,
-.close-button:focus {
+#close-button:hover,
+#close-button:focus {
   color: #555555;
   text-decoration: none;
   cursor: pointer;
 }
 
-.close-button:active {
+#close-button:active {
   color: #000000;
   transform: translateY(1px);
 }
