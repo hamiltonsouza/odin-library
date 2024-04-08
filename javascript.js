@@ -24,9 +24,6 @@ function Book(title,author,pages,read) {
     this.author = author;
     this.pages = pages;
     this.read = read;
-    // this.info = function() {
-    //     return (`${this.title} by ${this.author}, ${this.pages} pages, ${read}.` )
-    // };
 };
 
 function addBookToLibrary(book) {
@@ -36,11 +33,26 @@ function addBookToLibrary(book) {
 
 function printLibraryTable(book) {
     const tableRow = document.createElement("tr");
-    Object.keys(book).forEach(key => {
-        const currentElement = document.createElement("td");
-        currentElement.textContent = book[key];
-        tableRow.appendChild(currentElement);
+    const bookTitle = document.createElement("td");
+    bookTitle.textContent = book.title;
+    tableRow.appendChild(bookTitle);
+    const bookAuthor = document.createElement("td");
+    bookAuthor.textContent = book.author;
+    tableRow.appendChild(bookAuthor);
+    const bookPages = document.createElement("td");
+    bookPages.textContent = book.pages;
+    tableRow.appendChild(bookPages);
+    const bookRead = document.createElement("td");
+    const bookReadCheckbox = document.createElement("input");
+    bookReadCheckbox.setAttribute("type", "checkbox");
+    bookReadCheckbox.checked = book.read;
+    bookReadCheckbox.addEventListener('change', function() {
+        if (this.checked) {
+            book.read = true;
+        } else {book.read = false}
     });
+    bookRead.appendChild(bookReadCheckbox);
+    tableRow.appendChild(bookRead);
     tableRow.dataset.libraryIndex = myLibrary.indexOf(book);
     bookTable.appendChild(tableRow);
     const deleteButtonCell = document.createElement("td");
