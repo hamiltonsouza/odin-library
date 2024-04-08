@@ -17,10 +17,6 @@ window.onclick = function(event) {
   }
 };
 
-deleteButton.onclick = function() {
-    deleteButton.closest("tr").remove();
-}
-
 const myLibrary = [];
 
 function Book(title,author,pages,read) {
@@ -35,28 +31,28 @@ function Book(title,author,pages,read) {
 
 function addBookToLibrary(book) {
     myLibrary.push(book);
-    printLibraryTable();
+    printLibraryTable(book);
 };
 
-function printLibraryTable() {
-    myLibrary.forEach( book => {
-        const tableRow = document.createElement("tr");
-        Object.keys(book).forEach(key => {
-            const currentElement = document.createElement("td");
-            currentElement.textContent = book[key];
-            tableRow.appendChild(currentElement);
-        });
-        bookTable.appendChild(tableRow);
-        const deleteButtonCell = document.createElement("td");
-        const deleteButton = document.createElement("button");
-        deleteButton.addEventListener("click", function () {
-            tableRow.remove();
-        });
-        deleteButton.setAttribute("type", "button")
-        deleteButton.textContent = "×";
-        deleteButtonCell.appendChild(deleteButton);
-        tableRow.appendChild(deleteButtonCell);
+function printLibraryTable(book) {
+    const tableRow = document.createElement("tr");
+    Object.keys(book).forEach(key => {
+        const currentElement = document.createElement("td");
+        currentElement.textContent = book[key];
+        tableRow.appendChild(currentElement);
     });
+    tableRow.dataset.libraryIndex = myLibrary.indexOf(book);
+    bookTable.appendChild(tableRow);
+    const deleteButtonCell = document.createElement("td");
+    const deleteButton = document.createElement("button");
+    deleteButton.addEventListener("click", function () {
+        myLibrary.splice(deleteButton.closest("tr").dataset.libraryIndex, 1);
+        tableRow.remove();
+    });
+    deleteButton.setAttribute("type", "button")
+    deleteButton.textContent = "×";
+    deleteButtonCell.appendChild(deleteButton);
+    tableRow.appendChild(deleteButtonCell);
 }
 
 let bookTable = document.querySelector(".book-table");
@@ -69,7 +65,7 @@ function submitButtonClick(event) {
     let bookTitle = document.getElementById("book-title").value;
     let bookAuthor = document.getElementById("book-author").value;
     let bookPages = document.getElementById("book-pages").value;
-    let bookRead = document.getElementById("book-read").value;
+    let bookRead = document.getElementById("book-read").checked;
     const newBook =  new Book(bookTitle, bookAuthor, bookPages, bookRead);
     addBookToLibrary(newBook);
     document.getElementById("book-title").value = '';
